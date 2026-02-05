@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PPG Envirobase HP - Interactive Checklist & Caution</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        margin: 20px;
+        background: #f8f8f8;
+    }
+    h1 {
+        text-align: center;
+        color: #003366;
+    }
+    h2 {
+        color: #003366;
+        margin-top: 15px;
+    }
+    .tabs {
+        display: flex;
+        margin-bottom: 20px;
+        cursor: pointer;
+    }
+    .tab {
+        flex: 1;
+        padding: 10px;
+        text-align: center;
+        background: #003366;
+        color: white;
+        font-weight: bold;
+        border-radius: 5px 5px 0 0;
+        margin-right: 2px;
+    }
+    .tab.active {
+        background: #0055a5;
+    }
+    .tab-content {
+        display: none;
+        background: #fff;
+        padding: 15px;
+        border-radius: 0 5px 5px 5px;
+        box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    .tab-content.active {
+        display: block;
+    }
+    .step {
+        margin-left: 20px;
+        margin-bottom: 5px;
+    }
+    .warning {
+        color: red;
+        font-weight: bold;
+    }
+    .print-btn {
+        display: block;
+        margin: 20px auto;
+        padding: 10px 20px;
+        background: #003366;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+    .print-btn:hover {
+        background: #0055a5;
+    }
+</style>
+</head>
+<body>
+
+<h1>PPG Envirobase HP - Interactive Checklist & Caution</h1>
+
+<div class="tabs">
+    <div class="tab active" onclick="openTab('checklist')">Checklist</div>
+    <div class="tab" onclick="openTab('caution')">Caution / FYI</div>
+</div>
+
+<!-- Checklist Tab -->
+<div id="checklist" class="tab-content active">
+    <h2>Vehicle Prep Outside Booth</h2>
+    <div class="step"><input type="checkbox"> Blow vehicle thoroughly with clean, dry compressed air (panels, seams, trims, mirrors, handles)</div>
+    <div class="step"><input type="checkbox"> Check visually for loose dust or sanding residue</div>
+    <div class="step"><input type="checkbox"> Optional: light water rinse before any other cleaning, allow drip-off and confirm fully dry</div>
+
+    <h2>Move Vehicle Into Booth</h2>
+    <div class="step"><input type="checkbox"> Booth floor clean</div>
+    <div class="step"><input type="checkbox"> Filters clean, airflow correct</div>
+    <div class="step"><input type="checkbox"> Booth cleared of unnecessary items</div>
+    <div class="step"><input type="checkbox"> Vehicle dust-free and dry</div>
+
+    <h2>Masking</h2>
+    <div class="step"><input type="checkbox"> Mask vehicle using masking film</div>
+    <div class="step"><input type="checkbox"> Ensure all areas not being painted are covered</div>
+
+    <h2>Degreasing / Cleaning</h2>
+    <div class="step"><input type="checkbox"> D837 Spirit Wipe - FIRST: apply one direction, wipe off immediately, do not let dry</div>
+    <div class="step"><input type="checkbox"> D8401 Waterborne Cleaner - SECOND: apply with clean cloth, wipe off immediately, do not let dry</div>
+    <div class="step warning"><input type="checkbox"> Final Check: surface clean, no streaks, do not touch with bare hands, check wet panels, raw plastics never wiped with D837</div>
+
+    <h2>Pre-Paint Preparation</h2>
+    <div class="step"><input type="checkbox"> Wipe with tack cloth</div>
+    <div class="step"><input type="checkbox"> Blow air while wiping to remove dust</div>
+    <div class="step"><input type="checkbox"> Wipe over masked areas</div>
+
+    <h2>Painter & Booth Safety</h2>
+    <div class="step"><input type="checkbox"> Spray painter wearing correct PPE</div>
+    <div class="step"><input type="checkbox"> Booth cleared of unnecessary items</div>
+    <div class="step"><input type="checkbox"> Booth clean of possible contaminants</div>
+
+    <h2>Paint Preparation</h2>
+    <div class="step"><input type="checkbox"> Stir toners thoroughly</div>
+    <div class="step"><input type="checkbox"> Mix colour per PPG formula</div>
+    <div class="step"><input type="checkbox"> Reduce if required (per TDS)</div>
+    <div class="step"><input type="checkbox"> Strain through 125 µm strainer</div>
+    <div class="step"><input type="checkbox"> Test spray pattern</div>
+
+    <h2>Basecoat Application</h2>
+    <div class="step"><input type="checkbox"> Apply light, even coats</div>
+    <div class="step"><input type="checkbox"> Maintain correct gun distance & overlap</div>
+    <div class="step"><input type="checkbox"> Allow flash-off between coats</div>
+    <div class="step"><input type="checkbox"> Surface uniform matte</div>
+    <div class="step"><input type="checkbox"> Metallics: apply control coat if required</div>
+
+    <h2>Before Clearcoat</h2>
+    <div class="step"><input type="checkbox"> Full coverage achieved</div>
+    <div class="step"><input type="checkbox"> Colour even</div>
+    <div class="step"><input type="checkbox"> Basecoat fully flashed</div>
+    <div class="step"><input type="checkbox"> Light tack if required</div>
+    <div class="step"><input type="checkbox"> Proceed with approved PPG clearcoat process</div>
+
+    <h2>Sign-Off</h2>
+    <div class="step">Job No: __________</div>
+    <div class="step">Painter: __________</div>
+    <div class="step">Date: __________</div>
+    <div class="step">All steps followed: <input type="checkbox"> YES <input type="checkbox"> NO</div>
+
+    <button class="print-btn" onclick="window.print()">Print Checklist</button>
+</div>
+
+<!-- Caution / FYI Tab -->
+<div id="caution" class="tab-content">
+    <h2>Booth & Air Safety</h2>
+    <div class="step warning"><input type="checkbox"> Never use compressed air inside the spray booth</div>
+    <div class="step"><input type="checkbox"> All blow-off must be done outside the booth</div>
+    <div class="step"><input type="checkbox"> Dust inside booth contaminates paint and increases rework</div>
+
+    <h2>Water Use / Hosing Vehicle</h2>
+    <div class="step"><input type="checkbox"> Optional light rinse only before degreasing</div>
+    <div class="step"><input type="checkbox"> Vehicle must be 100% dry before moving into booth</div>
+    <div class="step"><input type="checkbox"> Do not force water into seams or trims</div>
+    <div class="step"><input type="checkbox"><strong>Pros:</strong> Removes loose dust, sanding residue, mud, grit, compound residue, reduces static on plastics, cools panels</div>
+    <div class="step warning"><input type="checkbox"><strong>Cons:</strong> Water trapped in seams can drip causing craters, solvent pop, streaking; hose water may contain minerals, rust, oils; only removes visible dirt; D837 still required; drying delays can cause defects</div>
+
+    <h2>Degreasing Rules</h2>
+    <div class="step"><input type="checkbox"> D837 first, D8401 second</div>
+    <div class="step warning"><input type="checkbox"> Raw plastics never wiped with 837</div>
+    <div class="step"><input type="checkbox"> Check wet panels for defects</div>
+
+    <h2>Tack Cloth</h2>
+    <div class="step"><input type="checkbox"> Always before painting, including masked areas</div>
+    <div class="step"><input type="checkbox"> Blow air while wiping to remove dust</div>
+
+    <h2>Painter Safety / PPE</h2>
+    <div class="step"><input type="checkbox"> Respirator, gloves, coveralls, eye protection required</div>
+
+    <h2>Booth & Shop Cleanliness</h2>
+    <div class="step"><input type="checkbox"> Booth must be clear of all contaminants and unnecessary items</div>
+    <div class="step"><input type="checkbox"> Maintain good housekeeping to prevent dust/debris contamination</div>
+
+    <h2>General / Golden Rules</h2>
+    <div class="step"><input type="checkbox"> Water cleaning does not replace degreasing</div>
+    <div class="step"><input type="checkbox"> Follow PPG TDS strictly for basecoat and clearcoat</div>
+    <div class="step"><input type="checkbox"> No shortcuts allowed in waterborne systems</div>
+
+    <button class="print-btn" onclick="window.print()">Print Caution / FYI</button>
+</div>
+
+<script>
+function openTab(tabId) {
+    const tabs = document.querySelectorAll('.tab');
+    const contents = document.querySelectorAll('.tab-content');
+    tabs.forEach(t => t.classList.remove('active'));
+    contents.forEach(c => c.classList.remove('active'));
+    document.querySelector('.tab[onclick="openTab(\'' + tabId + '\')"]').classList.add('active');
+    document.getElementById(tabId).classList.add('active');
+}
+</script>
+
+</body>
+</html>
