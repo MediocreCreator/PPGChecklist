@@ -3,180 +3,251 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PPG Envirobase HP - Interactive Checklist & Caution</title>
+<title>PPG Envirobase HP - Checklist</title>
+
 <style>
-    body {
-        font-family: Arial, sans-serif;
-        margin: 20px;
-        background: #f8f8f8;
-    }
-    h1 {
-        text-align: center;
-        color: #003366;
-    }
-    h2 {
-        color: #003366;
-        margin-top: 15px;
-    }
-    .tabs {
-        display: flex;
-        margin-bottom: 20px;
-        cursor: pointer;
-    }
-    .tab {
-        flex: 1;
-        padding: 10px;
-        text-align: center;
-        background: #003366;
-        color: white;
-        font-weight: bold;
-        border-radius: 5px 5px 0 0;
-        margin-right: 2px;
-    }
-    .tab.active {
-        background: #0055a5;
-    }
-    .tab-content {
-        display: none;
-        background: #fff;
-        padding: 15px;
-        border-radius: 0 5px 5px 5px;
-        box-shadow: 0 0 5px rgba(0,0,0,0.1);
-    }
-    .tab-content.active {
-        display: block;
-    }
-    .step {
-        margin-left: 20px;
-        margin-bottom: 5px;
-    }
-    .warning {
-        color: red;
-        font-weight: bold;
-    }
-    .print-btn {
-        display: block;
-        margin: 20px auto;
-        padding: 10px 20px;
-        background: #003366;
-        color: #fff;
-        border: none;
-        border-radius: 5px;
-        font-size: 16px;
-        cursor: pointer;
-    }
-    .print-btn:hover {
-        background: #0055a5;
-    }
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f6f8;
+    position: relative;
+}
+
+/* WATERMARK */
+body::before {
+    content: "";
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    width: 700px;
+    height: 700px;
+    background: url("PPG.png") no-repeat center;
+    background-size: contain;
+    opacity: 0.08;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    pointer-events: none;
+}
+
+h1 {
+    text-align: center;
+    color: #003366;
+}
+
+h2 {
+    color: #003366;
+    margin-top: 20px;
+}
+
+.tabs {
+    display: flex;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+
+.tab {
+    flex: 1;
+    padding: 10px;
+    text-align: center;
+    background: #003366;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px 5px 0 0;
+    margin-right: 2px;
+}
+
+.tab.active {
+    background: #0055a5;
+}
+
+.tab-content {
+    display: none;
+    background: transparent;
+    padding: 20px;
+    border-radius: 0 5px 5px 5px;
+    box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.step {
+    margin-left: 20px;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.warning {
+    color: red;
+    font-weight: bold;
+}
+
+/* Custom 3-State Box */
+.state-box {
+    width: 20px;
+    height: 20px;
+    border: 2px solid #003366;
+    margin-right: 10px;
+    text-align: center;
+    line-height: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    user-select: none;
+    background: white;
+}
+
+.state-box.checked {
+    color: green;
+}
+
+.state-box.crossed {
+    color: red;
+}
+
+.print-btn, .save-btn, .delete-btn {
+    display: inline-block;
+    margin: 15px 10px;
+    padding: 10px 20px;
+    background: #003366;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.print-btn:hover, .save-btn:hover, .delete-btn:hover {
+    background: #0055a5;
+}
+
+input[type="text"], input[type="date"], select {
+    margin-left: 5px;
+    padding: 2px 5px;
+}
 </style>
 </head>
+
 <body>
 
-<h1>PPG Envirobase HP - Interactive Checklist & Caution</h1>
+<h1>PPG Envirobase HP - Preparation Checklist</h1>
 
 <div class="tabs">
     <div class="tab active" onclick="openTab('checklist')">Checklist</div>
-    <div class="tab" onclick="openTab('caution')">Caution / FYI</div>
+    <div class="tab" onclick="openTab('caution')">Caution</div>
 </div>
 
-<!-- Checklist Tab -->
+<!-- CHECKLIST TAB -->
 <div id="checklist" class="tab-content active">
-    <h2>Vehicle Prep Outside Booth</h2>
-    <div class="step"><input type="checkbox"> Blow vehicle thoroughly with clean, dry compressed air (panels, seams, trims, mirrors, handles)</div>
-    <div class="step"><input type="checkbox"> Check visually for loose dust or sanding residue</div>
-    <div class="step"><input type="checkbox"> Optional: light water rinse before any other cleaning, allow drip-off and confirm fully dry</div>
 
-    <h2>Move Vehicle Into Booth</h2>
-    <div class="step"><input type="checkbox"> Booth floor clean</div>
-    <div class="step"><input type="checkbox"> Filters clean, airflow correct</div>
-    <div class="step"><input type="checkbox"> Booth cleared of unnecessary items</div>
-    <div class="step"><input type="checkbox"> Vehicle dust-free and dry</div>
+<h2>Vehicle Prep Outside Booth</h2>
+<div class="step"><div class="state-box" onclick="toggleState(this)">&#9633;</div>Blow vehicle thoroughly with clean, dry compressed air (panels, seams, trims, mirrors, handles)</div>
+<div class="step"><div class="state-box" onclick="toggleState(this)">&#9633;</div>Check visually for loose dust or sanding residue</div>
+<div class="step"><div class="state-box" onclick="toggleState(this)">&#9633;</div>Optional: light water rinse before any other cleaning, allow drip-off and confirm fully dry</div>
 
-    <h2>Masking</h2>
-    <div class="step"><input type="checkbox"> Mask vehicle using masking film</div>
-    <div class="step"><input type="checkbox"> Ensure all areas not being painted are covered</div>
+<h2>Move Vehicle Into Booth</h2>
+<div class="step"><div class="state-box" onclick="toggleState(this)">&#9633;</div>Booth floor clean</div>
+<div class="step"><div class="state-box" onclick="toggleState(this)">&#9633;</div>Filters clean, airflow correct</div>
+<div class="step"><div class="state-box" onclick="toggleState(this)">&#9633;</div>Booth cleared of unnecessary items</div>
+<div class="step"><div class="state-box" onclick="toggleState(this)">&#9633;</div>Vehicle dust-free and dry</div>
 
-    <h2>Degreasing / Cleaning</h2>
-    <div class="step"><input type="checkbox"> D837 Spirit Wipe - FIRST: apply one direction, wipe off immediately, do not let dry</div>
-    <div class="step"><input type="checkbox"> D8401 Waterborne Cleaner - SECOND: apply with clean cloth, wipe off immediately, do not let dry</div>
-    <div class="step warning"><input type="checkbox"> Final Check: surface clean, no streaks, do not touch with bare hands, check wet panels, raw plastics never wiped with D837</div>
+<h2>Masking</h2>
+<div class="step"><div class="state-box" onclick="toggleState(this)">&#9633;</div>Mask vehicle using masking film</div>
+<div class="step"><div class="state-box" onclick="toggleState(this)">&#9633;</div>Ensure all areas not being painted are covered</div>
 
-    <h2>Pre-Paint Preparation</h2>
-    <div class="step"><input type="checkbox"> Wipe with tack cloth</div>
-    <div class="step"><input type="checkbox"> Blow air while wiping to remove dust</div>
-    <div class="step"><input type="checkbox"> Wipe over masked areas</div>
+<h2>Degreasing / Cleaning</h2>
+<div class="step"><div class="state-box" onclick="toggleState(this)">&#9633;</div>D837 Spirit Wipe - FIRST: apply with clean cloth, wipe off immediately with a dry cloth, do not let dry</div>
+<div class="step"><div class="state-box" onclick="toggleState(this)">&#9633;</div>D8401 Waterborne Cleaner - SECOND: apply with clean cloth, wipe off immediately with a dry cloth, do not let dry</div>
+<div class="step warning"><div class="state-box" onclick="toggleState(this)">&#9633;</div>Final Check: surface clean, no streaks, do not touch with bare hands, check wet panels, raw plastics must never be wiped with D837</div>
 
-    <h2>Painter & Booth Safety</h2>
-    <div class="step"><input type="checkbox"> Spray painter wearing correct PPE</div>
-    <div class="step"><input type="checkbox"> Booth cleared of unnecessary items</div>
-    <div class="step"><input type="checkbox"> Booth clean of possible contaminants</div>
+<h2>Pre-Paint Preparation</h2>
+<div class="step"><div class="state-box" onclick="toggleState(this)">&#9633;</div>Wipe with tack cloth</div>
+<div class="step"><div class="state-box" onclick="toggleState(this)">&#9633;</div>Blow air while wiping to remove dust</div>
+<div class="step"><div class="state-box" onclick="toggleState(this)">&#9633;</div>Wipe over masked areas</div>
 
-    <h2>Paint Preparation</h2>
-    <div class="step"><input type="checkbox"> Stir toners thoroughly</div>
-    <div class="step"><input type="checkbox"> Mix colour per PPG formula</div>
-    <div class="step"><input type="checkbox"> Reduce if required (per TDS)</div>
-    <div class="step"><input type="checkbox"> Strain through 125 µm strainer</div>
-    <div class="step"><input type="checkbox"> Test spray pattern</div>
+<h2>Painter & Booth Safety</h2>
+<div class="step"><div class="state-box" onclick="toggleState(this)">&#9633;</div>Spray painter wearing correct PPE</div>
+<div class="step"><div class="state-box" onclick="toggleState(this)">&#9633;</div>Booth cleared of unnecessary items</div>
+<div class="step"><div class="state-box" onclick="toggleState(this)">&#9633;</div>Booth clean of possible contaminants</div>
 
-    <h2>Basecoat Application</h2>
-    <div class="step"><input type="checkbox"> Apply light, even coats</div>
-    <div class="step"><input type="checkbox"> Maintain correct gun distance & overlap</div>
-    <div class="step"><input type="checkbox"> Allow flash-off between coats</div>
-    <div class="step"><input type="checkbox"> Surface uniform matte</div>
-    <div class="step"><input type="checkbox"> Metallics: apply control coat if required</div>
+<h2>Paint Preparation</h2>
+<div class="step"><div class="state-box" onclick="toggleState(this)">&#9633;</div>Stir toners thoroughly</div>
+<div class="step"><div class="state-box" onclick="toggleState(this)">&#9633;</div>Mix colour per PPG formula</div>
+<div class="step"><div class="state-box" onclick="toggleState(this)">&#9633;</div>Reduce if required (per TDS)</div>
+<div class="step"><div class="state-box" onclick="toggleState(this)">&#9633;</div>Strain through 125 µm strainer</div>
+<div class="step"><div class="state-box" onclick="toggleState(this)">&#9633;</div>Test spray pattern</div>
 
-    <h2>Before Clearcoat</h2>
-    <div class="step"><input type="checkbox"> Full coverage achieved</div>
-    <div class="step"><input type="checkbox"> Colour even</div>
-    <div class="step"><input type="checkbox"> Basecoat fully flashed</div>
-    <div class="step"><input type="checkbox"> Light tack if required</div>
-    <div class="step"><input type="checkbox"> Proceed with approved PPG clearcoat process</div>
+<h2>Basecoat Application</h2>
+<div class="step"><div class="state-box" onclick="toggleState(this)">&#9633;</div>Apply light, even coats</div>
+<div class="step"><div class="state-box" onclick="toggleState(this)">&#9633;</div>Maintain correct gun distance & overlap</div>
+<div class="step"><div class="state-box" onclick="toggleState(this)">&#9633;</div>Allow flash-off between coats</div>
+<div class="step"><div class="state-box" onclick="toggleState(this)">&#9633;</div>Surface uniform matte</div>
+<div class="step"><div class="state-box" onclick="toggleState(this)">&#9633;</div>Metallics: apply control coat if required</div>
 
-    <h2>Sign-Off</h2>
-    <div class="step">Job No: __________</div>
-    <div class="step">Painter: __________</div>
-    <div class="step">Date: __________</div>
-    <div class="step">All steps followed: <input type="checkbox"> YES <input type="checkbox"> NO</div>
+<h2>Before Clearcoat</h2>
+<div class="step"><div class="state-box" onclick="toggleState(this)">&#9633;</div>Full coverage achieved</div>
+<div class="step"><div class="state-box" onclick="toggleState(this)">&#9633;</div>Colour even</div>
+<div class="step"><div class="state-box" onclick="toggleState(this)">&#9633;</div>Basecoat fully flashed</div>
+<div class="step"><div class="state-box" onclick="toggleState(this)">&#9633;</div>Light tack if required</div>
+<div class="step"><div class="state-box" onclick="toggleState(this)">&#9633;</div>Proceed with approved PPG clearcoat process</div>
 
-    <button class="print-btn" onclick="window.print()">Print Checklist</button>
+<h2>Sign-Off</h2>
+<div class="step">Job No: <input type="text" id="jobNo" placeholder="Enter Job No" style="width:150px;"></div>
+<div class="step">Painter: <input type="text" id="painter" placeholder="Enter Painter Name" style="width:150px;"></div>
+<div class="step">Date: <input type="date" id="jobDate" style="width:150px;"></div>
+<div class="step">All steps followed: 
+    <div class="state-box" onclick="markYes(this)">&#9633;</div> YES 
+    <div class="state-box" onclick="markNo(this)">&#9633;</div> NO
 </div>
 
-<!-- Caution / FYI Tab -->
+<div class="step">
+    Load Previous Job: 
+    <select id="jobSelector" onchange="loadSelectedJob()">
+        <option value="">-- Select Job --</option>
+    </select>
+    <button class="delete-btn" onclick="deleteJob()">Delete</button>
+</div>
+
+<button class="print-btn" onclick="window.print()">Print Checklist</button>
+<button class="save-btn" onclick="saveChecklist()">Save Job</button>
+
+</div>
+
+<!-- CAUTION TAB -->
 <div id="caution" class="tab-content">
-    <h2>Booth & Air Safety</h2>
-    <div class="step warning"><input type="checkbox"> Never use compressed air inside the spray booth</div>
-    <div class="step"><input type="checkbox"> All blow-off must be done outside the booth</div>
-    <div class="step"><input type="checkbox"> Dust inside booth contaminates paint and increases rework</div>
+<h2>Compressed Air Usage</h2> <div class="step warning"><div class="state-box" onclick="toggleState(this)">&#9633;</div>Never use compressed air inside the spray booth to dust off vehicle</div>
+<div class="step"><div class="state-box" onclick="toggleState(this)">&#9633;</div>All blow-off must be done outside the booth</div> 
+<div class="step"><div class="state-box" onclick="toggleState(this)">&#9633;</div>Dust inside booth contaminates paint and increases rework</div> 
 
-    <h2>Water Use / Hosing Vehicle</h2>
-    <div class="step"><input type="checkbox"> Optional light rinse only before degreasing</div>
-    <div class="step"><input type="checkbox"> Vehicle must be 100% dry before moving into booth</div>
-    <div class="step"><input type="checkbox"> Do not force water into seams or trims</div>
-    <div class="step"><input type="checkbox"><strong>Pros:</strong> Removes loose dust, sanding residue, mud, grit, compound residue, reduces static on plastics, cools panels</div>
-    <div class="step warning"><input type="checkbox"><strong>Cons:</strong> Water trapped in seams can drip causing craters, solvent pop, streaking; hose water may contain minerals, rust, oils; only removes visible dirt; D837 still required; drying delays can cause defects</div>
+<h2>Water Use / Hosing Vehicle</h2> 
+<div class="step"><div class="state-box" onclick="toggleState(this)">&#9633;</div>Optional light rinse only before degreasing</div> 
+<div class="step"><div class="state-box" onclick="toggleState(this)">&#9633;</div>Vehicle must be 100% dry before moving into booth</div> 
+<div class="step"><div class="state-box" onclick="toggleState(this)">&#9633;</div>Do not force water into seams or trims</div> 
+<div class="step"><div class="state-box" onclick="toggleState(this)">&#9633;</div><strong>Pros:</strong> Removes loose dust, sanding residue, mud, grit, compound residue, reduces static on plastics, cools panels</div> 
+<div class="step warning"><div class="state-box" onclick="toggleState(this)">&#9633;</div><strong>Cons:</strong> Water trapped in seams can drip causing craters, solvent pop, streaking; hose water may contain minerals, rust, oils; only removes visible dirt; D837 still required; drying delays can cause defects</div> 
 
-    <h2>Degreasing Rules</h2>
-    <div class="step"><input type="checkbox"> D837 first, D8401 second</div>
-    <div class="step warning"><input type="checkbox"> Raw plastics never wiped with 837</div>
-    <div class="step"><input type="checkbox"> Check wet panels for defects</div>
+<h2>Degreasing Rules</h2> 
+<div class="step"><div class="state-box" onclick="toggleState(this)">&#9633;</div>D837 first, D8401 second</div> 
+<div class="step warning"><div class="state-box" onclick="toggleState(this)">&#9633;</div>Raw plastics should never be wiped with 837 as it damages the structure of the plastic and can cause paint defects</div> 
+<div class="step"><div class="state-box" onclick="toggleState(this)">&#9633;</div>Check wet panels for defects</div> 
 
-    <h2>Tack Cloth</h2>
-    <div class="step"><input type="checkbox"> Always before painting, including masked areas</div>
-    <div class="step"><input type="checkbox"> Blow air while wiping to remove dust</div>
+<h2>Tack Cloth</h2> 
+<div class="step"><div class="state-box" onclick="toggleState(this)">&#9633;</div>Always tack before painting, including masked areas</div> 
+<div class="step"><div class="state-box" onclick="toggleState(this)">&#9633;</div>Blow air while wiping to remove dust</div> 
 
-    <h2>Painter Safety / PPE</h2>
-    <div class="step"><input type="checkbox"> Respirator, gloves, coveralls, eye protection required</div>
+<h2>Painter Safety / PPE</h2> <div class="step"><div class="state-box" onclick="toggleState(this)">&#9633;</div>Respirator</div> 
+<div class="step"><div class="state-box" onclick="toggleState(this)">&#9633;</div>Gloves</div> 
+<div class="step"><div class="state-box" onclick="toggleState(this)">&#9633;</div>Coveralls</div> 
+<div class="step"><div class="state-box" onclick="toggleState(this)">&#9633;</div>Eye protection</div> 
 
-    <h2>Booth & Shop Cleanliness</h2>
-    <div class="step"><input type="checkbox"> Booth must be clear of all contaminants and unnecessary items</div>
-    <div class="step"><input type="checkbox"> Maintain good housekeeping to prevent dust/debris contamination</div>
+<h2>Booth & Shop Cleanliness</h2> 
+<div class="step"><div class="state-box" onclick="toggleState(this)">&#9633;</div>Booth must be clear of all contaminants and unnecessary items</div> 
+<div class="step"><div class="state-box" onclick="toggleState(this)">&#9633;</div>Maintain good housekeeping to prevent dust/debris contamination</div> 
 
-    <h2>General / Golden Rules</h2>
-    <div class="step"><input type="checkbox"> Water cleaning does not replace degreasing</div>
-    <div class="step"><input type="checkbox"> Follow PPG TDS strictly for basecoat and clearcoat</div>
-    <div class="step"><input type="checkbox"> No shortcuts allowed in waterborne systems</div>
+<button class="print-btn" onclick="window.print()">Print Caution</button>
 
-    <button class="print-btn" onclick="window.print()">Print Caution / FYI</button>
 </div>
 
 <script>
@@ -188,6 +259,98 @@ function openTab(tabId) {
     document.querySelector('.tab[onclick="openTab(\'' + tabId + '\')"]').classList.add('active');
     document.getElementById(tabId).classList.add('active');
 }
+
+// 3-state checkbox toggle
+function toggleState(box) {
+    if (!box.classList.contains("checked") && !box.classList.contains("crossed")) {
+        box.classList.add("checked");
+        box.innerHTML = "✓";
+    } 
+    else if (box.classList.contains("checked")) {
+        box.classList.remove("checked");
+        box.classList.add("crossed");
+        box.innerHTML = "✖";
+    } 
+    else {
+        box.classList.remove("crossed");
+        box.innerHTML = "&#9633;";
+    }
+}
+
+// YES / NO sign-off boxes
+function markYes(box) {
+    box.innerHTML = "✓";
+    box.style.color = "green";
+}
+function markNo(box) {
+    box.innerHTML = "✖";
+    box.style.color = "red";
+}
+
+// Save checklist with multiple jobs
+function saveChecklist() {
+    const jobNo = document.getElementById('jobNo').value.trim();
+    if (!jobNo) { alert('Enter a Job No before saving'); return; }
+    const data = {
+        jobNo: jobNo,
+        painter: document.getElementById('painter').value,
+        date: document.getElementById('jobDate').value,
+        steps: []
+    };
+    document.querySelectorAll('.state-box').forEach(box => data.steps.push(box.innerHTML));
+    
+    let allJobs = JSON.parse(localStorage.getItem('ppgJobs')) || {};
+    allJobs[jobNo] = data;
+    localStorage.setItem('ppgJobs', JSON.stringify(allJobs));
+    alert(`Job "${jobNo}" saved successfully!`);
+    populateJobSelector();
+}
+
+// Load a selected job from dropdown
+function loadSelectedJob() {
+    const jobNo = document.getElementById('jobSelector').value;
+    if (!jobNo) return;
+    let allJobs = JSON.parse(localStorage.getItem('ppgJobs')) || {};
+    if (!allJobs[jobNo]) return;
+    loadJob(allJobs[jobNo]);
+}
+
+// Load job data into form
+function loadJob(data) {
+    document.getElementById('jobNo').value = data.jobNo;
+    document.getElementById('painter').value = data.painter;
+    document.getElementById('jobDate').value = data.date;
+    const boxes = document.querySelectorAll('.state-box');
+    boxes.forEach((box, i) => { if(data.steps[i]) box.innerHTML = data.steps[i]; });
+}
+
+// Populate dropdown with saved jobs
+function populateJobSelector() {
+    const selector = document.getElementById('jobSelector');
+    const allJobs = JSON.parse(localStorage.getItem('ppgJobs')) || {};
+    selector.innerHTML = '<option value="">-- Select Job --</option>';
+    Object.keys(allJobs).forEach(job => {
+        const option = document.createElement('option');
+        option.value = job;
+        option.textContent = job;
+        selector.appendChild(option);
+    });
+}
+
+// Delete selected job
+function deleteJob() {
+    const jobNo = document.getElementById('jobSelector').value;
+    if (!jobNo) { alert('Select a job to delete'); return; }
+    if (!confirm(`Are you sure you want to delete job "${jobNo}"?`)) return;
+    let allJobs = JSON.parse(localStorage.getItem('ppgJobs')) || {};
+    delete allJobs[jobNo];
+    localStorage.setItem('ppgJobs', JSON.stringify(allJobs));
+    populateJobSelector();
+    alert(`Job "${jobNo}" deleted`);
+}
+
+// Initialize job selector on page load
+window.onload = populateJobSelector;
 </script>
 
 </body>
